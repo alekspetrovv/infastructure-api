@@ -1,7 +1,7 @@
 package com.example.group01.exception;
 
-public class ZoneNotFoundException extends RuntimeException{
-    public ZoneNotFoundException(String message) {
+public class MapNotFoundException extends RuntimeException{
+    public MapNotFoundException(String message) {
         super(message);
     }
 }
