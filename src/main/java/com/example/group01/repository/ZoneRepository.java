@@ -1,6 +1,6 @@
 package com.example.group01.repository;
 
-import com.example.group01.module.Zone;
+import com.example.group01.modules.Zone;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ZoneRepository extends JpaRepository<Zone, Long> {

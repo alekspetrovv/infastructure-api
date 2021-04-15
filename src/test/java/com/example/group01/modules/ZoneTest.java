@@ -1,4 +1,4 @@
-package com.example.group01.module;
+package com.example.group01.modules;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

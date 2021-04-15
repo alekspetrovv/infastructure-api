@@ -1,7 +1,7 @@
 package com.example.group01.service;
 
 import com.example.group01.exception.MapNotFoundException;
-import com.example.group01.module.Map;
+import com.example.group01.modules.Map;
 import com.example.group01.repository.MapRepository;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,8 @@ public class MapService {
         existingMap.setLatitude(map.getLatitude());
         existingMap.setLongitude(map.getLongitude());
         existingMap.setTitle(map.getTitle());
-        return mapRepository.save(existingMap);
+        return existingMap;
+//        return mapRepository.save(existingMap);
     }
 
     public Map findMapById(Long id) {

@@ -1,4 +1,4 @@
-package com.example.group01.module;
+package com.example.group01.modules;
 import javax.persistence.*;
 
 @Entity

@@ -1,8 +1,7 @@
 package com.example.group01.controller;
 
-import com.example.group01.module.Map;
-import com.example.group01.module.Zone;
-import com.example.group01.service.MapService;
+import com.example.group01.modules.Map;
+import com.example.group01.modules.Zone;
 import com.example.group01.service.ZoneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

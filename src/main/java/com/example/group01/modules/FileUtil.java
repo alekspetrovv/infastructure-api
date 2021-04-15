@@ -1,4 +1,4 @@
-package com.example.group01.module;
+package com.example.group01.modules;
 
 import org.springframework.web.multipart.MultipartFile;
 

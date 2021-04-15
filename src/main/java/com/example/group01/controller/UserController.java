@@ -1,7 +1,7 @@
 package com.example.group01.controller;
 
-import com.example.group01.module.Map;
-import com.example.group01.module.User;
+import com.example.group01.modules.Map;
+import com.example.group01.modules.User;
 import com.example.group01.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import java.util.List;
 @RequestMapping("/user")
 @CrossOrigin("/user")
 public class UserController {
+
 
     private final UserService userService;
 

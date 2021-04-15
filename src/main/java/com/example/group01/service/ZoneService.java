@@ -1,10 +1,8 @@
 package com.example.group01.service;
 
-import com.example.group01.exception.MapNotFoundException;
 import com.example.group01.exception.ZoneNotFoundException;
-import com.example.group01.module.Map;
-import com.example.group01.module.Zone;
-import com.example.group01.repository.MapRepository;
+import com.example.group01.modules.Map;
+import com.example.group01.modules.Zone;
 import com.example.group01.repository.ZoneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

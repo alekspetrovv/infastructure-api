@@ -1,25 +1,27 @@
 package com.example.group01.controller;
 
-import com.example.group01.module.FileUtil;
-import com.example.group01.module.Map;
+import com.example.group01.modules.FileUtil;
+import com.example.group01.modules.Map;
 import com.example.group01.service.MapService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/maps")
+@Validated
 public class MapController {
 
     private final MapService mapService;
-
 
     public MapController(MapService mapService) {
         this.mapService = mapService;
@@ -40,11 +42,15 @@ public class MapController {
     @PostMapping(value = "")
     public ResponseEntity<?> create(
             @RequestParam("file") MultipartFile multipartFile,
-            @RequestParam("title") String title,
-            @RequestParam("latitude") String latitude,
-            @RequestParam("longitude") String longitude,
-            Map map
+            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam("latitude") String latitude,
+            @NotBlank @RequestParam("longitude") String longitude
     ) throws IOException {
+
+        Map map = new Map();
+        map.setTitle(title);
+        map.setLatitude(latitude);
+        map.setLongitude(longitude);
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         map.setImg(fileName);
@@ -57,13 +63,19 @@ public class MapController {
         return new ResponseEntity<>(newMap, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{map}")
-    public ResponseEntity<Map> update(
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(
             @RequestParam(value = "file", required = false) MultipartFile multipartFile,
-            @RequestParam("title") String title,
-            @RequestParam("latitude") String latitude,
-            @RequestParam("longitude") String longitude,
-            Map map) {
+            @PathVariable long id,
+            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam("latitude") String latitude,
+            @NotBlank @RequestParam("longitude") String longitude
+    ) {
+
+        Map map = this.mapService.findMapById(id);
+        map.setTitle(title);
+        map.setLatitude(latitude);
+        map.setLongitude(longitude);
 
         Map updatedMap = mapService.update(map);
 

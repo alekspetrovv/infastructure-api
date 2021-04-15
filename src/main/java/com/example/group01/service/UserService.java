@@ -2,7 +2,7 @@ package com.example.group01.service;
 
 import com.example.group01.exception.MapNotFoundException;
 import com.example.group01.exception.UserNotFoundException;
-import com.example.group01.module.User;
+import com.example.group01.modules.User;
 import com.example.group01.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
