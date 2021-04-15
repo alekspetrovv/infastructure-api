@@ -2,7 +2,6 @@ package com.example.group01.service;
 
 import com.example.group01.exception.MapNotFoundException;
 import com.example.group01.exception.UserNotFoundException;
-import com.example.group01.module.Map;
 import com.example.group01.module.User;
 import com.example.group01.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +39,8 @@ public class UserService {
             throw new UserNotFoundException("User does not exist!");
         }
         existingUser.setEmail(u.getEmail());
-        existingUser.setFirst_name(u.getFirst_name());
-        existingUser.setLast_name(u.getLast_name());
+        existingUser.setFirstName(u.getFirstName());
+        existingUser.setLastName(u.getLastName());
         existingUser.setPassword(u.getPassword());
         return userRepository.save(existingUser);
     }

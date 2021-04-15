@@ -16,6 +16,7 @@ public class MapController {
 
     private final MapService mapService;
 
+
     public MapController(MapService mapService) {
         this.mapService = mapService;
     }

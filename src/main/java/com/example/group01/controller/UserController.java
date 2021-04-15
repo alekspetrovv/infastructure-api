@@ -1,18 +1,17 @@
 package com.example.group01.controller;
 
+import com.example.group01.module.Map;
 import com.example.group01.module.User;
 import com.example.group01.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/user")
+@CrossOrigin("/user")
 public class UserController {
 
     private final UserService userService;
@@ -23,8 +22,8 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAll() {
-        List<User> users = userService.read();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        List<User> user = userService.read();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -46,11 +45,9 @@ public class UserController {
     }
 
 
-    @Transactional
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<User> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Map> delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
