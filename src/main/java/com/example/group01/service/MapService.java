@@ -3,10 +3,13 @@ package com.example.group01.service;
 import com.example.group01.exception.MapNotFoundException;
 import com.example.group01.module.Map;
 import com.example.group01.repository.MapRepository;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -54,11 +57,12 @@ public class MapService {
     }
 
     @Transactional
-    public void delete(long id) {
+    public void delete(long id) throws IOException {
         Map existingMap = mapRepository.getMapById(id);
         if (existingMap == null) {
             throw new MapNotFoundException("Map does not exist!");
         }
+        FileUtils.deleteDirectory(new File("img/maps/" + id));
         mapRepository.deleteMapById(id);
     }
 

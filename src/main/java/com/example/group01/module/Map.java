@@ -1,5 +1,4 @@
 package com.example.group01.module;
-
 import javax.persistence.*;
 
 @Entity
@@ -9,9 +8,10 @@ public class Map {
     @Column(nullable = false, updatable = false)
     private long id;
     private String title;
-    private String img;
     private String latitude;
     private String longitude;
+    private String img;
+
 
 
     public Map(String title, String img, String latitude, String longitude) {
@@ -20,8 +20,6 @@ public class Map {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
-
 
     public Map(){
 
