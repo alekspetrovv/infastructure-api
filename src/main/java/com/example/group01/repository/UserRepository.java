@@ -1,10 +1,12 @@
 package com.example.group01.repository;
 
-import com.example.group01.modules.User;
+import com.example.group01.modules.ApiUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User,Long> {
-    User getUserById(long id);
-    User getUserByEmail(String email);
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<ApiUser,Long> {
+    ApiUser getUserById(long id);
+    Optional<ApiUser> findByUsername(String username);
     void deleteUserById(long id);
 }

@@ -3,6 +3,7 @@ package com.example.group01.modules;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ZoneTest {
@@ -65,7 +66,7 @@ class ZoneTest {
 
     @Test
     void setY_axis() {
-        Zone zone = new Zone("zone1", "111", "112", map);
+        Zone zone = new Zone("zone1", "111","123" , map);
         assertNotNull(zone);
         zone.setY_axis("113");
         assertEquals("113", zone.getY_axis());
