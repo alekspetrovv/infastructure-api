@@ -19,6 +19,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/maps")
 @Validated
+@CrossOrigin("*")
 public class MapController {
 
     private final MapService mapService;
