@@ -15,6 +15,7 @@ test:
 sonarqube:
   stage: sonarqube
   script:
+    - cd group-01
     - ./gradlew sonarqube
   dependencies:
     - test
