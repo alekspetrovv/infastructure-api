@@ -22,10 +22,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST,AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
-                .antMatchers(HttpMethod.GET,"/maps/**","/zones/**","/floorplans/**","/readers/**","/controllers/**").hasAnyAuthority("RECEPTIONIST","ADMIN")
-                .antMatchers(HttpMethod.PUT,"/readers/**","/controllers/**").hasAnyAuthority("ENGINEER","ADMIN")
-                .antMatchers("**").hasAnyAuthority("ADMIN")
+                .antMatchers("/**").permitAll()
+//                .antMatchers(HttpMethod.POST,AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
+//               .antMatchers(HttpMethod.GET,"/maps/**","/zones/**","/floorplans/**","/readers/**","/controllers/**").hasAnyAuthority("RECEPTIONIST","ADMIN")
+//              .antMatchers(HttpMethod.PUT,"/readers/**","/controllers/**").hasAnyAuthority("ENGINEER","ADMIN")
+//               .antMatchers("**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))

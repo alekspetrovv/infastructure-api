@@ -1,67 +1,41 @@
 package com.example.group01.modules;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Zone {
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "zone")
+public class Zone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long id;
     private String title;
-    private String x_axis;
-    private String y_axis;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "map_id", referencedColumnName = "id")
+    private String img;
+    //TODO
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "map_id",nullable = false)
     private Map map;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "zone",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Controller> controllerList = new ArrayList<>();
 
-    public Zone(String title, String x_axis, String y_axis, Map map) {
+    public Zone(String title,String img, Map map) {
         this.title = title;
-        this.x_axis = x_axis;
-        this.y_axis = y_axis;
+        this.img = img;
         this.map = map;
     }
-
-
-    public Zone() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getX_axis() {
-        return x_axis;
-    }
-
-    public void setX_axis(String x_axis) {
-        this.x_axis = x_axis;
-    }
-
-    public String getY_axis() {
-        return y_axis;
-    }
-
-    public void setY_axis(String y_axis) {
-        this.y_axis = y_axis;
-    }
-
-    public Map getMap() {
-        return map;
-    }
-
-    public void setMap(Map map) {
-        this.map = map;
-    }
-
 
 }

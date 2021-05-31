@@ -2,7 +2,10 @@ package com.example.group01.controller;
 
 import com.example.group01.modules.FileUtil;
 import com.example.group01.modules.Map;
+import com.example.group01.modules.Zone;
 import com.example.group01.service.MapService;
+import com.example.group01.service.ZoneService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
@@ -19,15 +23,11 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/maps")
 @Validated
+@AllArgsConstructor
 @CrossOrigin("*")
 public class MapController {
 
     private final MapService mapService;
-
-    public MapController(MapService mapService) {
-        this.mapService = mapService;
-    }
-
     @GetMapping("")
     public ResponseEntity<List<Map>> getAll() {
         List<Map> maps = mapService.read();
@@ -46,13 +46,12 @@ public class MapController {
             @NotBlank @RequestParam("title") String title,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude
-    ) throws IOException {
 
+    ) throws IOException {
         Map map = new Map();
         map.setTitle(title);
         map.setLatitude(latitude);
         map.setLongitude(longitude);
-
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         map.setImg(fileName);
         Map newMap = mapService.create(map);

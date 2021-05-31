@@ -1,8 +1,22 @@
 package com.example.group01.modules;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-public class Map {
+@Getter
+@Setter
+@NoArgsConstructor
+@Table(name = "map")
+public class Map implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -11,8 +25,14 @@ public class Map {
     private String latitude;
     private String longitude;
     private String img;
-
-
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "map",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    //TODO
+    private Set<Zone> zones = new HashSet<>();
 
     public Map(String title, String img, String latitude, String longitude) {
         this.title = title;
@@ -20,50 +40,5 @@ public class Map {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-
-    public Map(){
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
 
 }

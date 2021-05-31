@@ -46,7 +46,6 @@ public class MapService {
         existingMap.setLongitude(map.getLongitude());
         existingMap.setTitle(map.getTitle());
         return existingMap;
-//        return mapRepository.save(existingMap);
     }
 
     public Map findMapById(Long id) {
