@@ -1,0 +1,68 @@
+package com.example.group01.service;
+
+import com.example.group01.exception.ControllerNotFoundException;
+import com.example.group01.exception.MapNotFoundException;
+import com.example.group01.exception.ZoneNotFoundException;
+import com.example.group01.modules.Controller;
+import com.example.group01.repository.ControllerRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class ControllerService {
+
+    private final ControllerRepository controllerRepository;
+
+
+    public Controller create(Controller controller) {
+        Controller controllerExist = controllerRepository.getControllerByTitle(controller.getTitle());
+        if (controllerExist != null) {
+            throw new ControllerNotFoundException("Controller with title: " + controllerExist.getTitle() + " already exist!");
+        }
+        return controllerRepository.save(controller);
+    }
+
+
+    public List<Controller> read() {
+        return controllerRepository.findAll();
+    }
+
+
+    public Controller update(Controller controller) {
+        Controller existingController = controllerRepository.getControllerById(controller.getId());
+        if (existingController == null) {
+            throw new ControllerNotFoundException("Controller does not exist!");
+        }
+        if(existingController.getZone() == null){
+            throw new ZoneNotFoundException("Zone does not exist!");
+        }
+        existingController.setLatitude(controller.getLatitude());
+        existingController.setLongitude(controller.getLongitude());
+        existingController.setTitle(controller.getTitle());
+        existingController.setReaderList(controller.getReaderList());
+        return controllerRepository.save(existingController);
+    }
+
+
+    public Controller findControllerById(Long id) {
+        Controller controller = controllerRepository.getControllerById(id);
+        if (controller == null) {
+            throw new ControllerNotFoundException("Controller does not exist");
+        }
+        return controller;
+    }
+
+    @Transactional
+    public void delete(long id) {
+        Controller existingController = controllerRepository.getControllerById(id);
+        if (existingController == null) {
+            throw new ControllerNotFoundException("Controller does not exist!");
+        }
+        controllerRepository.deleteControllerById(id);
+    }
+
+}

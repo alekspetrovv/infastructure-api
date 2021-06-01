@@ -3,6 +3,7 @@ package com.example.group01.service;
 import com.example.group01.exception.MapNotFoundException;
 import com.example.group01.modules.Map;
 import com.example.group01.repository.MapRepository;
+import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MapService {
+
     public final MapRepository mapRepository;
-
-    @Autowired
-    public MapService(MapRepository mapRepository) {
-        this.mapRepository = mapRepository;
-    }
-
 
     public Map create(Map map) {
         Map mapExist = mapRepository.getMapByTitle(map.getTitle());
@@ -45,7 +42,7 @@ public class MapService {
         existingMap.setLatitude(map.getLatitude());
         existingMap.setLongitude(map.getLongitude());
         existingMap.setTitle(map.getTitle());
-        return existingMap;
+        return mapRepository.save(existingMap);
     }
 
     public Map findMapById(Long id) {

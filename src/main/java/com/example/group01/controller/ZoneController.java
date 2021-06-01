@@ -25,7 +25,6 @@ import java.util.Objects;
 public class ZoneController {
 
     private final ZoneService zoneService;
-    private final MapService mapService;
 
     @GetMapping("/all")
     public ResponseEntity<List<Zone>> getAll() {

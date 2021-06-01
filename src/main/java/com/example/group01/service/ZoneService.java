@@ -43,7 +43,8 @@ public class ZoneService {
 
         zoneExist.setTitle(zone.getTitle());
         zoneExist.setImg(zone.getImg());
-
+        zoneExist.setMap(zone.getMap());
+        zoneExist.setControllerList(zone.getControllerList());
         return zoneRepository.save(zoneExist);
 
     }

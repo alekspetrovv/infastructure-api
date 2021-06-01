@@ -9,37 +9,42 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "map")
-public class Map implements Serializable {
+@Table(name = "controller")
+public class Controller implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long id;
     private String title;
-    private String latitude;
     private String longitude;
-    private String img;
+    private String latitude;
 
 
-    //TODO
+    @ManyToOne
+    @JoinColumn(name = "zone_id", nullable = false)
+    private Zone zone;
+
+
     @OneToMany(
+            mappedBy = "controller",
             fetch = FetchType.LAZY,
-            mappedBy = "map",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Zone> zones = new ArrayList<>();
+    private List<Reader> readerList = new ArrayList<>();
 
 
-    public Map(String title, String img, String latitude, String longitude) {
+    public Controller(String title, String longitude, String latitude, Zone zone) {
         this.title = title;
-        this.img = img;
-        this.latitude = latitude;
         this.longitude = longitude;
+        this.latitude = latitude;
+        this.zone = zone;
     }
+
 
 }

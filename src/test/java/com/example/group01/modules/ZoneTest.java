@@ -2,43 +2,92 @@ package com.example.group01.modules;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ZoneTest {
 
-    private Map map;
-
-    @Test
-    void setId() {
-
-    }
-
-    @Test
-    void createZone() {
-        new Zone();
-    }
-
     @Test
     void getId() {
+        long id = 1;
+        Zone zone = new Zone();
+        zone.setId(id);
+        assertEquals(id, zone.getId());
     }
 
     @Test
     void getTitle() {
-        String title = "zone1";
-        Zone zone = new Zone("zone1", "test" ,map);
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
         assertNotNull(zone);
-        assertEquals(title, zone.getTitle());
+        assertEquals("zone", zone.getTitle());
+    }
+
+    @Test
+    void getImg() {
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        assertNotNull(zone);
+        assertEquals("test", zone.getImg());
+    }
+
+    @Test
+    void getMap() {
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        assertNotNull(zone);
+        assertEquals("map", zone.getMap().getLatitude());
+    }
+
+    @Test
+    void getControllerList() {
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        Controller controller = new Controller();
+        List<Controller> controllerList = new ArrayList<>();
+        controllerList.add(controller);
+        zone.setControllerList(controllerList);
+        assertNotNull(zone);
+        assertEquals(1, zone.getControllerList().stream().count());
+    }
+
+    @Test
+    void setId() {
+        long id = 1;
+        Zone zone = new Zone();
+        zone.setId(id);
+        assertEquals(id, zone.getId());
     }
 
     @Test
     void setTitle() {
-        Zone zone = new Zone("zone1","test", map);
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        zone.setTitle("zone1");
         assertNotNull(zone);
-        zone.setTitle("test");
-        assertEquals("test", zone.getTitle());
+        assertEquals("zone1", zone.getTitle());
     }
 
+    @Test
+    void setImg() {
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        zone.setImg("image");
+        assertNotNull(zone);
+        assertEquals("image", zone.getImg());
+    }
 
-
+    @Test
+    void setControllerList() {
+        Map map = new Map("test", "map", "map", "3213");
+        Zone zone = new Zone("zone", "test", map);
+        Controller controller = new Controller();
+        List<Controller> controllerList = new ArrayList<>();
+        controllerList.add(controller);
+        zone.setControllerList(controllerList);
+        assertNotNull(zone);
+        assertEquals(1, zone.getControllerList().stream().count());
+    }
 }

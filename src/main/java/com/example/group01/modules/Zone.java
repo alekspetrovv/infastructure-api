@@ -15,24 +15,31 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "zone")
 public class Zone implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long id;
     private String title;
     private String img;
+
+
     //TODO
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "map_id",nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "map_id", nullable = false)
     private Map map;
+
+
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             mappedBy = "zone",
             cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            orphanRemoval = true
+    )
     private List<Controller> controllerList = new ArrayList<>();
 
-    public Zone(String title,String img, Map map) {
+
+    public Zone(String title, String img, Map map) {
         this.title = title;
         this.img = img;
         this.map = map;
