@@ -1,5 +1,6 @@
 package com.example.group01.modules;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,7 @@ public class Zone implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonBackReference
     private List<Controller> controllerList = new ArrayList<>();
 
 

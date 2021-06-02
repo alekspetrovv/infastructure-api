@@ -1,5 +1,6 @@
 package com.example.group01.modules;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "map")
 public class Map implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -25,13 +27,14 @@ public class Map implements Serializable {
     private String img;
 
 
+
     //TODO
     @OneToMany(
-            fetch = FetchType.LAZY,
             mappedBy = "map",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonBackReference
     private List<Zone> zones = new ArrayList<>();
 
 
