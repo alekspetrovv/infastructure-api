@@ -7,6 +7,7 @@ import com.example.group01.modules.Zone;
 import com.example.group01.service.MapService;
 import com.example.group01.service.ZoneService;
 import lombok.AllArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +28,7 @@ public class ZoneController {
 
     private final ZoneService zoneService;
 
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<Zone>> getAll() {
         List<Zone> zones = zoneService.read();
         return new ResponseEntity<>(zones, HttpStatus.OK);
@@ -36,6 +38,12 @@ public class ZoneController {
     public ResponseEntity<Zone> getZone(@PathVariable("id") Long id) {
         Zone getZone = zoneService.findZoneById(id);
         return new ResponseEntity<>(getZone, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/controllers")
+    public ResponseEntity<?> getZoneControllers(@PathVariable("id") Long id) {
+        Zone zone = zoneService.findZoneById(id);
+        return new ResponseEntity<>(zone.getControllerList(), HttpStatus.OK);
     }
 
     @PostMapping(value = "")
@@ -51,7 +59,7 @@ public class ZoneController {
         zone.setImg(fileName);
         Zone newZone = zoneService.create(zone);
 
-        String uploadDir = "img/zones/" + newZone.getId();
+        String uploadDir = "src/main/resources/img/zones/" + newZone.getId();
 
         FileUtil.saveFile(uploadDir, fileName, multipartFile);
 
@@ -63,12 +71,21 @@ public class ZoneController {
             @RequestParam(value = "file", required = false) MultipartFile multipartFile,
             @PathVariable long id,
             @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam(value = "map_id",required = false) Map map
+            @NotBlank @RequestParam(value = "map_id", required = false) Map map
 
-    ) {
+    ) throws IOException {
         Zone zone = zoneService.findZoneById(id);
         zone.setTitle(title);
         zone.setMap(map);
+
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            FileUtils.deleteDirectory(new File("img/zones/" + zone.getId()));
+            String uploadDir = "src/main/resources/img/zones/" + zone.getId();
+            zone.setImg(fileName);
+            FileUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+
 
         Zone updatedZone = zoneService.update(zone);
 
@@ -76,9 +93,8 @@ public class ZoneController {
     }
 
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Zone> delete(@PathVariable("id") Long id) throws IOException{
+    public ResponseEntity<Zone> delete(@PathVariable("id") Long id) throws IOException {
         zoneService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

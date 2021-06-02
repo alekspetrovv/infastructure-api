@@ -33,18 +33,7 @@ public class ControllerService {
 
 
     public Controller update(Controller controller) {
-        Controller existingController = controllerRepository.getControllerById(controller.getId());
-        if (existingController == null) {
-            throw new ControllerNotFoundException("Controller does not exist!");
-        }
-        if(existingController.getZone() == null){
-            throw new ZoneNotFoundException("Zone does not exist!");
-        }
-        existingController.setLatitude(controller.getLatitude());
-        existingController.setLongitude(controller.getLongitude());
-        existingController.setTitle(controller.getTitle());
-        existingController.setReaderList(controller.getReaderList());
-        return controllerRepository.save(existingController);
+       return controllerRepository.save(controller);
     }
 
 

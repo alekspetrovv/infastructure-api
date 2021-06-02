@@ -32,17 +32,8 @@ public class MapService {
         return mapRepository.findAll();
     }
 
-
     public Map update(Map map) {
-        Map existingMap = mapRepository.getMapById(map.getId());
-        if (existingMap == null) {
-            throw new MapNotFoundException("Map does not exist!");
-        }
-        existingMap.setImg(map.getImg());
-        existingMap.setLatitude(map.getLatitude());
-        existingMap.setLongitude(map.getLongitude());
-        existingMap.setTitle(map.getTitle());
-        return mapRepository.save(existingMap);
+        return mapRepository.save(map);
     }
 
     public Map findMapById(Long id) {

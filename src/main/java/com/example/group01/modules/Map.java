@@ -26,9 +26,6 @@ public class Map implements Serializable {
     private String longitude;
     private String img;
 
-
-
-    //TODO
     @OneToMany(
             mappedBy = "map",
             cascade = CascadeType.ALL,
@@ -36,6 +33,10 @@ public class Map implements Serializable {
     )
     @JsonBackReference
     private List<Zone> zones = new ArrayList<>();
+
+    public List<Zone> getZones()  {
+            return this.zones;
+    }
 
 
     public Map(String title, String img, String latitude, String longitude) {
@@ -45,4 +46,11 @@ public class Map implements Serializable {
         this.longitude = longitude;
     }
 
+    public String getImg() {
+       return "/img/maps/" + this.id + "/" + this.img;
+    }
+
+    public void attachZone(Zone zone) {
+        this.zones.add(zone);
+    }
 }

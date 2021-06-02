@@ -30,7 +30,6 @@ public class Zone implements Serializable {
     @JoinColumn(name = "map_id", nullable = false)
     private Map map;
 
-
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "zone",
@@ -45,6 +44,10 @@ public class Zone implements Serializable {
         this.title = title;
         this.img = img;
         this.map = map;
+    }
+
+    public String getImg() {
+        return "/img/zones/" + this.id + "/" + this.img;
     }
 
 }

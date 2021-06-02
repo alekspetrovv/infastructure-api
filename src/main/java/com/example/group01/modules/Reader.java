@@ -1,6 +1,7 @@
 package com.example.group01.modules;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +22,10 @@ public class Reader {
     private String title;
     private String longitude;
     private String latitude;
+
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "controller_id",nullable = false)
+    @JsonBackReference
     private Controller controller;
 
     public Reader(String title, String longitude, String latitude, Controller controller) {

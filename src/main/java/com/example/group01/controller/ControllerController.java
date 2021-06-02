@@ -37,6 +37,12 @@ public class ControllerController {
         return new ResponseEntity<>(getController, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/readers")
+    public ResponseEntity<?> getControllerReaders(@PathVariable("id") Long id) {
+        Controller controller = controllerService.findControllerById(id);
+        return new ResponseEntity<>(controller.getReaderList(), HttpStatus.OK);
+    }
+
 
 
     @PostMapping(value = "")

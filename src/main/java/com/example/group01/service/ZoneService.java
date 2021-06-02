@@ -36,16 +36,7 @@ public class ZoneService {
 
 
     public Zone update(Zone zone) {
-        Zone zoneExist = zoneRepository.getZoneById(zone.getId());
-        if (zoneExist == null) {
-            throw new ZoneNotFoundException("Zone does not exist!");
-        }
-
-        zoneExist.setTitle(zone.getTitle());
-        zoneExist.setImg(zone.getImg());
-        zoneExist.setMap(zone.getMap());
-        zoneExist.setControllerList(zone.getControllerList());
-        return zoneRepository.save(zoneExist);
+        return zoneRepository.save(zone);
 
     }
 
