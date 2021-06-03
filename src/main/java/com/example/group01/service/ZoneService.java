@@ -57,7 +57,7 @@ public class ZoneService {
             throw new ZoneNotFoundException("Zone does not exist!");
         }
 
-        FileUtils.deleteDirectory(new File("img/zones/" + id));
+        FileUtils.deleteDirectory(new File("src/main/resources/img/zones/" + id));
         zoneRepository.deleteZoneById(zoneExist.getId());
     }
 

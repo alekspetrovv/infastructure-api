@@ -50,7 +50,7 @@ public class MapService {
         if (existingMap == null) {
             throw new MapNotFoundException("Map does not exist!");
         }
-        FileUtils.deleteDirectory(new File("img/maps/" + id));
+        FileUtils.deleteDirectory(new File("src/main/resources/img/maps/" + id));
         mapRepository.deleteMapById(id);
     }
 

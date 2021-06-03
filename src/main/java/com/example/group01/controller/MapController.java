@@ -28,7 +28,6 @@ import java.util.Objects;
 public class MapController {
 
     private final MapService mapService;
-    private final ZoneService zoneService;
 
     @GetMapping("")
     public ResponseEntity<List<Map>> getAll() {
@@ -50,7 +49,7 @@ public class MapController {
 
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @RequestParam(value = "file", required = true) MultipartFile multipartFile,
+            @RequestParam(value = "file") MultipartFile multipartFile,
             @NotBlank @RequestParam("title") String title,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude
@@ -87,7 +86,7 @@ public class MapController {
 
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            FileUtils.deleteDirectory(new File("img/maps/" + map.getId()));
+            FileUtils.deleteDirectory(new File("src/main/resources/img/maps/" + map.getId()));
             map.setImg(fileName);
             String uploadDir = "src/main/resources/img/maps/" + map.getId();
             FileUtil.saveFile(uploadDir, fileName, multipartFile);

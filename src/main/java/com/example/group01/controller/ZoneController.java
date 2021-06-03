@@ -46,6 +46,12 @@ public class ZoneController {
         return new ResponseEntity<>(zone.getControllerList(), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/points")
+    public ResponseEntity<?> getZonePoints(@PathVariable("id") Long id) {
+        Zone zone = zoneService.findZoneById(id);
+        return new ResponseEntity<>(zone.getPointsList(), HttpStatus.OK);
+    }
+
     @PostMapping(value = "")
     public ResponseEntity<?> create(
             @RequestParam("file") MultipartFile multipartFile,
@@ -80,7 +86,7 @@ public class ZoneController {
 
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            FileUtils.deleteDirectory(new File("img/zones/" + zone.getId()));
+            FileUtils.deleteDirectory(new File("src/main/resources/img/zones/" + zone.getId()));
             String uploadDir = "src/main/resources/img/zones/" + zone.getId();
             zone.setImg(fileName);
             FileUtil.saveFile(uploadDir, fileName, multipartFile);

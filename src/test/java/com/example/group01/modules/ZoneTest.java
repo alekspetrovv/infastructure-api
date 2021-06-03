@@ -28,9 +28,10 @@ class ZoneTest {
     @Test
     void getImg() {
         Map map = new Map("test", "map", "map", "3213");
-        Zone zone = new Zone("zone", "test", map);
+        String img = "test.png";
+        Zone zone = new Zone("zone", img, map);
         assertNotNull(zone);
-        assertEquals("test", zone.getImg());
+        assertEquals("/img/zones/0/test.png", zone.getImg());
     }
 
     @Test
@@ -72,11 +73,13 @@ class ZoneTest {
 
     @Test
     void setImg() {
+        String img = "img.png";
         Map map = new Map("test", "map", "map", "3213");
-        Zone zone = new Zone("zone", "test", map);
-        zone.setImg("image");
+        Zone zone = new Zone("zone", img, map);
+        String updateImg = "test.png";
+        zone.setImg(updateImg);
         assertNotNull(zone);
-        assertEquals("image", zone.getImg());
+        assertEquals("/img/zones/0/test.png", zone.getImg());
     }
 
     @Test

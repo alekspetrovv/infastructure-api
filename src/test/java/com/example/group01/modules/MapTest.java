@@ -46,17 +46,19 @@ class MapTest {
     @Test
     void getImg() {
         String img = "img.png";
-        Map map = new Map("random", "img.png", "test", "test");
+        Map map = new Map("random", img, "test", "test");
         assertNotNull(map);
-        assertEquals(img, map.getImg());
+        assertEquals("/img/maps/0/img.png", map.getImg());
     }
 
     @Test
     void setImg() {
-        Map map = new Map("random", "img.png", "test", "test");
+        String img = "img.png";
+        Map map = new Map("random", img, "test", "test");
         assertNotNull(map);
-        map.setImg("test.png");
-        assertEquals("test.png", map.getImg());
+        String updateImg = "test.png";
+        map.setImg(updateImg);
+        assertEquals("/img/maps/0/test.png", map.getImg());
     }
 
     @Test

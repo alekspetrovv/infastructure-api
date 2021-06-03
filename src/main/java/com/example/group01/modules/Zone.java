@@ -24,8 +24,6 @@ public class Zone implements Serializable {
     private String title;
     private String img;
 
-
-    //TODO
     @ManyToOne
     @JoinColumn(name = "map_id", nullable = false)
     private Map map;
@@ -38,6 +36,16 @@ public class Zone implements Serializable {
     )
     @JsonBackReference
     private List<Controller> controllerList = new ArrayList<>();
+
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "zone",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonBackReference
+    private List<Point> pointsList = new ArrayList<>();
 
 
     public Zone(String title, String img, Map map) {
