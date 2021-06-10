@@ -8,9 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ControllerRepository extends JpaRepository<Controller, Long> {
 
     Controller getControllerById(long id);
-
-    Controller getControllerByTitle(String title);
-
     void deleteControllerById(long id);
 
 }

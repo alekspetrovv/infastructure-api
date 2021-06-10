@@ -43,18 +43,6 @@ class ZoneTest {
     }
 
     @Test
-    void getControllerList() {
-        Map map = new Map("test", "map", "map", "3213");
-        Zone zone = new Zone("zone", "test", map);
-        Controller controller = new Controller();
-        List<Controller> controllerList = new ArrayList<>();
-        controllerList.add(controller);
-        zone.setControllerList(controllerList);
-        assertNotNull(zone);
-        assertEquals(1, zone.getControllerList().stream().count());
-    }
-
-    @Test
     void setId() {
         long id = 1;
         Zone zone = new Zone();
@@ -81,16 +69,5 @@ class ZoneTest {
         assertNotNull(zone);
         assertEquals("/img/zones/0/test.png", zone.getImg());
     }
-
-    @Test
-    void setControllerList() {
-        Map map = new Map("test", "map", "map", "3213");
-        Zone zone = new Zone("zone", "test", map);
-        Controller controller = new Controller();
-        List<Controller> controllerList = new ArrayList<>();
-        controllerList.add(controller);
-        zone.setControllerList(controllerList);
-        assertNotNull(zone);
-        assertEquals(1, zone.getControllerList().stream().count());
-    }
 }
+

@@ -4,6 +4,7 @@ package com.example.group01.modules;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "point")
 public class Point implements Serializable {
 

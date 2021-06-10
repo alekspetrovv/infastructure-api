@@ -2,7 +2,6 @@ package com.example.group01.controller;
 
 
 import com.example.group01.modules.Controller;
-import com.example.group01.modules.Zone;
 import com.example.group01.service.ControllerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
@@ -44,51 +44,57 @@ public class ControllerController {
     }
 
 
-
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
-            @RequestParam("zone_id") Zone zone
+            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime
 
     ) {
         Controller controller = new Controller();
-        controller.setTitle(title);
+        controller.setRemarks(remarks);
+        controller.setStatus(status);
+        controller.setEnabled(enabled);
+        controller.setFromTime(fromTime);
+        controller.setUntilTime(untilTime);
         controller.setLatitude(latitude);
         controller.setLongitude(longitude);
-        controller.setZone(zone);
         Controller newController = controllerService.create(controller);
         return new ResponseEntity<>(newController, HttpStatus.CREATED);
     }
 
 
-
-
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
-            @RequestParam(value = "zone_id", required = false) Zone zone
+            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime
     ) {
         Controller controller = this.controllerService.findControllerById(id);
-        controller.setTitle(title);
+        controller.setRemarks(remarks);
+        controller.setStatus(status);
+        controller.setEnabled(enabled);
+        controller.setFromTime(fromTime);
+        controller.setUntilTime(untilTime);
         controller.setLatitude(latitude);
         controller.setLongitude(longitude);
-        controller.setZone(zone);
-
         Controller updatedController = controllerService.update(controller);
 
         return new ResponseEntity<>(updatedController, HttpStatus.CREATED);
     }
 
 
-
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Controller> delete(@PathVariable("id") Long id){
+    public ResponseEntity<Controller> delete(@PathVariable("id") Long id) {
         controllerService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

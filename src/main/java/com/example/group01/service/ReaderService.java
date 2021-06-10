@@ -18,10 +18,6 @@ public class ReaderService {
 
 
     public Reader create(Reader reader) {
-        Reader readerExist = readerRepository.getReaderByTitle(reader.getTitle());
-        if (readerExist != null) {
-            throw new ReaderNotFoundException("Reader with title: " + readerExist.getTitle() + " already exist!");
-        }
         return readerRepository.save(reader);
     }
 
@@ -32,18 +28,7 @@ public class ReaderService {
 
 
     public Reader update(Reader reader) {
-        Reader existingReader = readerRepository.getReaderById(reader.getId());
-        if (existingReader == null) {
-            throw new ReaderNotFoundException("Reader does not exist!");
-        }
-        if (existingReader.getController() == null) {
-            throw new ControllerNotFoundException("Controller does not exist!");
-        }
-        existingReader.setLatitude(reader.getLatitude());
-        existingReader.setLongitude(reader.getLongitude());
-        existingReader.setTitle(reader.getTitle());
-        existingReader.setController(reader.getController());
-        return readerRepository.save(existingReader);
+        return readerRepository.save(reader);
     }
 
 

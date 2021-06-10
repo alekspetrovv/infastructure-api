@@ -2,7 +2,6 @@ package com.example.group01.controller;
 
 
 import com.example.group01.modules.Reader;
-import com.example.group01.modules.Zone;
 import com.example.group01.service.ReaderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
-import java.awt.print.Pageable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -42,14 +41,22 @@ public class ReaderController {
 
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
+            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime,
             @RequestParam("controller_id") com.example.group01.modules.Controller controller
 
     ) {
         Reader reader = new Reader();
-        reader.setTitle(title);
+        reader.setRemarks(remarks);
+        reader.setStatus(status);
+        reader.setEnabled(enabled);
+        reader.setFromTime(fromTime);
+        reader.setUntilTime(untilTime);
         reader.setLatitude(latitude);
         reader.setLongitude(longitude);
         reader.setController(controller);
@@ -63,13 +70,21 @@ public class ReaderController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @NotBlank @RequestParam("title") String title,
+            @NotBlank @RequestParam("remarks") String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
+            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime,
             @RequestParam(value = "controller_id", required = false) com.example.group01.modules.Controller controller
     ) {
         Reader reader = this.readerService.findReaderById(id);
-        reader.setTitle(title);
+        reader.setRemarks(remarks);
+        reader.setStatus(status);
+        reader.setEnabled(enabled);
+        reader.setFromTime(fromTime);
+        reader.setUntilTime(untilTime);
         reader.setLatitude(latitude);
         reader.setLongitude(longitude);
         reader.setController(controller);

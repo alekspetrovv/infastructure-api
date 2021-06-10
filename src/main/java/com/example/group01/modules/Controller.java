@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,20 +17,20 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "controller")
 public class Controller implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private long id;
-    private String title;
+    private String remarks;
+    private String status;
+    private Date fromTime;
+    private Date untilTime;
+    private Boolean enabled;
     private String longitude;
     private String latitude;
-
-
-    @ManyToOne
-    @JoinColumn(name = "zone_id", nullable = false)
-    private Zone zone;
 
 
     @OneToMany(
@@ -41,11 +43,10 @@ public class Controller implements Serializable {
     private List<Reader> readerList = new ArrayList<>();
 
 
-    public Controller(String title, String longitude, String latitude, Zone zone) {
-        this.title = title;
+    public Controller(String remarks, String longitude, String latitude) {
+        this.remarks = remarks;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.zone = zone;
     }
 
 

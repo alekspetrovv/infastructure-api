@@ -1,8 +1,6 @@
 package com.example.group01.service;
 
 import com.example.group01.exception.ControllerNotFoundException;
-import com.example.group01.exception.MapNotFoundException;
-import com.example.group01.exception.ZoneNotFoundException;
 import com.example.group01.modules.Controller;
 import com.example.group01.repository.ControllerRepository;
 import lombok.AllArgsConstructor;
@@ -19,10 +17,6 @@ public class ControllerService {
 
 
     public Controller create(Controller controller) {
-        Controller controllerExist = controllerRepository.getControllerByTitle(controller.getTitle());
-        if (controllerExist != null) {
-            throw new ControllerNotFoundException("Controller with title: " + controllerExist.getTitle() + " already exist!");
-        }
         return controllerRepository.save(controller);
     }
 

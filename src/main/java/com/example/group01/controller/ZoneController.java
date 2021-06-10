@@ -40,11 +40,6 @@ public class ZoneController {
         return new ResponseEntity<>(getZone, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/controllers")
-    public ResponseEntity<?> getZoneControllers(@PathVariable("id") Long id) {
-        Zone zone = zoneService.findZoneById(id);
-        return new ResponseEntity<>(zone.getControllerList(), HttpStatus.OK);
-    }
 
     @GetMapping("/{id}/points")
     public ResponseEntity<?> getZonePoints(@PathVariable("id") Long id) {
