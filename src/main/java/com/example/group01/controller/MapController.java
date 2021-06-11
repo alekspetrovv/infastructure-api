@@ -72,25 +72,25 @@ public class MapController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
-            @RequestParam(value = "file", required = false) MultipartFile multipartFile,
+//            @RequestParam(value = "file", required = false) MultipartFile multipartFile,
             @PathVariable long id,
-            @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam("latitude") String latitude,
-            @NotBlank @RequestParam("longitude") String longitude
+            @NotBlank @RequestParam("title") String title
+//            @RequestParam(value = "latitude", required = false) String latitude,
+//            @RequestParam(value = "longitude", required = false) String longitude
     ) throws IOException {
 
         Map map = this.mapService.findMapById(id);
         map.setTitle(title);
-        map.setLatitude(latitude);
-        map.setLongitude(longitude);
-
-        if (multipartFile != null) {
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            FileUtils.deleteDirectory(new File("src/main/resources/img/maps/" + map.getId()));
-            map.setImg(fileName);
-            String uploadDir = "src/main/resources/img/maps/" + map.getId();
-            FileUtil.saveFile(uploadDir, fileName, multipartFile);
-        }
+//        map.setLatitude(latitude);
+//        map.setLongitude(longitude);
+//
+//        if (multipartFile != null) {
+//            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+//            FileUtils.deleteDirectory(new File("src/main/resources/img/maps/" + map.getId()));
+//            map.setImg(fileName);
+//            String uploadDir = "src/main/resources/img/maps/" + map.getId();
+//            FileUtil.saveFile(uploadDir, fileName, multipartFile);
+//        }
 
 
         Map updatedMap = mapService.update(map);

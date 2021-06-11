@@ -46,10 +46,10 @@ public class ControllerController {
 
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
+            @RequestParam(value = "remarks", required = false) String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
-            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
             @RequestParam(value = "fromTime", required = false) Date fromTime,
             @RequestParam(value = "untilTime", required = false) Date untilTime
@@ -71,10 +71,10 @@ public class ControllerController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
-            @NotBlank @RequestParam("latitude") String latitude,
-            @NotBlank @RequestParam("longitude") String longitude,
-            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "remarks", required = false) String remarks,
+            @RequestParam(value = "latitude", required = false) String latitude,
+            @RequestParam(value = "longitude", required = false) String longitude,
+            @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
             @RequestParam(value = "fromTime", required = false) Date fromTime,
             @RequestParam(value = "untilTime", required = false) Date untilTime

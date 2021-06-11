@@ -14,7 +14,7 @@ import java.io.IOException;
 public class ImageController {
 
     @RequestMapping(value = "/img/{resource}/{id}/{img_name}", method = RequestMethod.GET,
-            produces = MediaType.IMAGE_JPEG_VALUE)
+            produces = MediaType.ALL_VALUE)
 
     public void getImage(
             @PathVariable String resource,
@@ -24,7 +24,7 @@ public class ImageController {
 
         var imgFile = new ClassPathResource("img/" + resource + "/" + id + "/" + img_name);
 
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        response.setContentType(MediaType.ALL_VALUE);
         StreamUtils.copy(imgFile.getInputStream(), response.getOutputStream());
     }
 }

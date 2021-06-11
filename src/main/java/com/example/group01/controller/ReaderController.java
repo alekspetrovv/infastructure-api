@@ -38,13 +38,18 @@ public class ReaderController {
         return new ResponseEntity<>(getReader, HttpStatus.OK);
     }
 
+    @GetMapping("/controllerId/{id}")
+    public ResponseEntity<?> getControllerIdReader(@PathVariable("id") Long id) {
+        Reader getReader = readerService.findReaderById(id);
+        return new ResponseEntity<>(getReader.getController().getId(), HttpStatus.OK);
+    }
 
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @NotBlank @RequestParam(value = "remarks", required = false) String remarks,
+            @RequestParam(value = "remarks", required = false) String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
-            @NotBlank @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
             @RequestParam(value = "fromTime", required = false) Date fromTime,
             @RequestParam(value = "untilTime", required = false) Date untilTime,
@@ -70,11 +75,11 @@ public class ReaderController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @NotBlank @RequestParam("remarks") String remarks,
+            @RequestParam("remarks") String remarks,
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
-            @NotBlank @RequestParam(value = "status", required = false) String status,
-             @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "enabled", required = false) Boolean enabled,
             @RequestParam(value = "fromTime", required = false) Date fromTime,
             @RequestParam(value = "untilTime", required = false) Date untilTime,
             @RequestParam(value = "controller_id", required = false) com.example.group01.modules.Controller controller
