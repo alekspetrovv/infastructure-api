@@ -45,9 +45,9 @@ public class ReaderController {
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
             @NotBlank @RequestParam(value = "status", required = false) String status,
-            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime,
+            @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @RequestParam(value = "untilTime", required = false) Date untilTime,
             @RequestParam("controller_id") com.example.group01.modules.Controller controller
 
     ) {
@@ -74,9 +74,9 @@ public class ReaderController {
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
             @NotBlank @RequestParam(value = "status", required = false) String status,
-            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime,
+             @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @RequestParam(value = "untilTime", required = false) Date untilTime,
             @RequestParam(value = "controller_id", required = false) com.example.group01.modules.Controller controller
     ) {
         Reader reader = this.readerService.findReaderById(id);

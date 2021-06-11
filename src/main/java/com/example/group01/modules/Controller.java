@@ -33,15 +33,6 @@ public class Controller implements Serializable {
     private String latitude;
 
 
-    @OneToMany(
-            mappedBy = "controller",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JsonBackReference
-    private List<Reader> readerList = new ArrayList<>();
-
 
     public Controller(String remarks, String longitude, String latitude) {
         this.remarks = remarks;

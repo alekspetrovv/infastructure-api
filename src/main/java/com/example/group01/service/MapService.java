@@ -5,7 +5,6 @@ import com.example.group01.modules.Map;
 import com.example.group01.repository.MapRepository;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

@@ -37,11 +37,11 @@ public class ControllerController {
         return new ResponseEntity<>(getController, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/readers")
-    public ResponseEntity<?> getControllerReaders(@PathVariable("id") Long id) {
-        Controller controller = controllerService.findControllerById(id);
-        return new ResponseEntity<>(controller.getReaderList(), HttpStatus.OK);
-    }
+//    @GetMapping("/{id}/readers")
+//    public ResponseEntity<?> getControllerReaders(@PathVariable("id") Long id) {
+//        Controller controller = controllerService.findControllerById(id);
+//        return new ResponseEntity<>(controller.getReaderList(), HttpStatus.OK);
+//    }
 
 
     @PostMapping(value = "")
@@ -50,17 +50,17 @@ public class ControllerController {
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
             @NotBlank @RequestParam(value = "status", required = false) String status,
-            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime
+            @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @RequestParam(value = "untilTime", required = false) Date untilTime
 
     ) {
         Controller controller = new Controller();
         controller.setRemarks(remarks);
         controller.setStatus(status);
         controller.setEnabled(enabled);
-        controller.setFromTime(fromTime);
-        controller.setUntilTime(untilTime);
+//        controller.setFromTime(fromTime);
+//        controller.setUntilTime(untilTime);
         controller.setLatitude(latitude);
         controller.setLongitude(longitude);
         Controller newController = controllerService.create(controller);
@@ -75,9 +75,9 @@ public class ControllerController {
             @NotBlank @RequestParam("latitude") String latitude,
             @NotBlank @RequestParam("longitude") String longitude,
             @NotBlank @RequestParam(value = "status", required = false) String status,
-            @NotBlank @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @NotBlank @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @NotBlank @RequestParam(value = "untilTime", required = false) Date untilTime
+            @RequestParam(value = "enabled", required = false) Boolean enabled,
+            @RequestParam(value = "fromTime", required = false) Date fromTime,
+            @RequestParam(value = "untilTime", required = false) Date untilTime
     ) {
         Controller controller = this.controllerService.findControllerById(id);
         controller.setRemarks(remarks);
