@@ -1,6 +1,7 @@
 package com.example.group01.modules;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class Point implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "zone_id", nullable = false)
+    @JsonBackReference
     private Zone zone;
 
 

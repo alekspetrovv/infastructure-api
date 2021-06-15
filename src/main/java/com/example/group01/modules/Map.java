@@ -1,6 +1,7 @@
 package com.example.group01.modules;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,7 +34,7 @@ public class Map implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonBackReference
+    @JsonManagedReference
     private List<Zone> zones = new ArrayList<>();
 
     public List<Zone> getZones()  {

@@ -1,10 +1,11 @@
 package com.example.group01.controller;
 
 import com.example.group01.exception.MapNotFoundException;
-import com.example.group01.modules.FileUtil;
+import com.example.group01.modules.*;
 import com.example.group01.modules.Map;
-import com.example.group01.modules.Zone;
 import com.example.group01.service.MapService;
+import com.example.group01.service.PointService;
+import com.example.group01.service.ReaderService;
 import com.example.group01.service.ZoneService;
 import lombok.AllArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
@@ -18,8 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotBlank;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Controller
 @RequestMapping("/zones")
@@ -27,6 +28,8 @@ import java.util.Objects;
 public class ZoneController {
 
     private final ZoneService zoneService;
+    private final ReaderService readerService;
+    private final PointService pointService;
 
     @GetMapping("")
     public ResponseEntity<List<Zone>> getAll() {
@@ -51,13 +54,44 @@ public class ZoneController {
     public ResponseEntity<?> create(
             @RequestParam("file") MultipartFile multipartFile,
             @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam("map_id") Map map
+            @NotBlank @RequestParam("map_id") Map map,
+            @RequestParam(value = "readers[]") Long[] readers,
+            @RequestParam(value = "points[]") String[] points
     ) throws IOException {
         Zone zone = new Zone();
         zone.setTitle(title);
         zone.setMap(map);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         zone.setImg(fileName);
+
+
+        Set<Reader> readersHash = new HashSet<>();
+        for (Long reader_id : readers) {
+            Reader reader = this.readerService.findReaderById(reader_id);
+            readersHash.add(reader);
+
+        }
+        zone.setReaders(readersHash);
+
+        Set<Point> points_to_add = new HashSet<>();
+
+        for (String point : points) {
+
+            String[] lonnat = point.split(",");
+            String lon = lonnat[0];
+            String lat = lonnat[1];
+
+            Point pointObj = new Point();
+            pointObj.setLatitude(lat);
+            pointObj.setLongitude(lon);
+            pointObj.setZone(zone);
+
+            points_to_add.add(pointObj);
+        }
+
+        zone.setPointsList(points_to_add);
+
+
         Zone newZone = zoneService.create(zone);
 
         String uploadDir = "src/main/resources/img/zones/" + newZone.getId();
@@ -72,12 +106,41 @@ public class ZoneController {
             @RequestParam(value = "file", required = false) MultipartFile multipartFile,
             @PathVariable long id,
             @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam(value = "map_id", required = false) Map map
+            @NotBlank @RequestParam(value = "map_id", required = false) Map map,
+            @RequestParam(value = "readers[]") Long[] readers,
+            @RequestParam(value = "points[]") String[] points
 
     ) throws IOException {
         Zone zone = zoneService.findZoneById(id);
         zone.setTitle(title);
         zone.setMap(map);
+
+        Set<Point> points_to_add = new HashSet<>();
+
+        for (String point : points) {
+
+            String[] lonnat = point.split(",");
+            String lon = lonnat[0];
+            String lat = lonnat[1];
+
+            Point pointObj = new Point();
+            pointObj.setLatitude(lat);
+            pointObj.setLongitude(lon);
+            pointObj.setZone(zone);
+
+            points_to_add.add(pointObj);
+        }
+
+        zone.setPointsList(points_to_add);
+
+
+        Set<Reader> readersHash = new HashSet<>();
+        for (Long reader_id : readers) {
+            Reader reader = this.readerService.findReaderById(reader_id);
+            readersHash.add(reader);
+
+        }
+        zone.setReaders(readersHash);
 
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

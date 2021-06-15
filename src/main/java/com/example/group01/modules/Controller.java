@@ -1,6 +1,7 @@
 package com.example.group01.modules;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicUpdate
 @Table(name = "controller")
+
 public class Controller implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,13 @@ public class Controller implements Serializable {
     private String longitude;
     private String latitude;
 
+    @OneToMany(
+            mappedBy = "controller",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JsonBackReference
+    private List<Reader> readers = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "controller",

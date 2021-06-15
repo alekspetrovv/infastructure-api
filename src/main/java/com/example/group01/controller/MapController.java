@@ -22,7 +22,6 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/maps")
-@Validated
 @AllArgsConstructor
 @CrossOrigin("*")
 public class MapController {

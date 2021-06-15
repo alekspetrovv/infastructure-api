@@ -1,6 +1,7 @@
 package com.example.group01.modules;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,16 +29,13 @@ public class Zone implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "map_id", nullable = false)
+    @JsonBackReference
     private Map map;
 
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            mappedBy = "zone",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JsonBackReference
-    private List<Point> pointsList = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "zone_id") // we need to duplicate the physical information
+    @JsonManagedReference
+    private Set<Point> pointsList;
 
 
     @ManyToMany(fetch = FetchType.LAZY)
