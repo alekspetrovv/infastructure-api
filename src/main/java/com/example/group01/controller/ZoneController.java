@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+@CrossOrigin("*")
 @Controller
 @RequestMapping("/zones")
 @AllArgsConstructor
@@ -49,20 +50,34 @@ public class ZoneController {
 
     @PostMapping(value = "")
     public ResponseEntity<?> create(
-            @RequestParam("file") MultipartFile multipartFile,
+            @RequestParam(value = "file", required = false) MultipartFile multipartFile,
             @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam("map_id") Map map
+            @NotBlank @RequestParam("mapId") Map map,
+            @NotBlank @RequestParam("latLngs") String latLngs,
+            @RequestParam(value = "readers", required = false) String readers
     ) throws IOException {
         Zone zone = new Zone();
         zone.setTitle(title);
         zone.setMap(map);
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        zone.setLatLngs(latLngs);
+        zone.setReaders(readers);
+        String fileName;
+        if(multipartFile != null) {
+            fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        }
+        else {
+             fileName = null;
+        }
+
         zone.setImg(fileName);
         Zone newZone = zoneService.create(zone);
 
-        String uploadDir = "src/main/resources/img/zones/" + newZone.getId();
+        if(multipartFile != null) {
+            String uploadDir = "src/main/resources/img/zones/" + newZone.getId();
 
-        FileUtil.saveFile(uploadDir, fileName, multipartFile);
+            FileUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+
 
         return new ResponseEntity<>(newZone, HttpStatus.CREATED);
     }
@@ -72,12 +87,19 @@ public class ZoneController {
             @RequestParam(value = "file", required = false) MultipartFile multipartFile,
             @PathVariable long id,
             @NotBlank @RequestParam("title") String title,
-            @NotBlank @RequestParam(value = "map_id", required = false) Map map
+            @NotBlank @RequestParam(value = "mapId", required = false) Map map,
+            @NotBlank @RequestParam("latLngs") String latLngs,
+            @RequestParam("readers") String readers
+
 
     ) throws IOException {
         Zone zone = zoneService.findZoneById(id);
         zone.setTitle(title);
-        zone.setMap(map);
+        if(map != null) {
+            zone.setMap(map);
+        }
+        zone.setLatLngs(latLngs);
+        zone.setReaders(readers);
 
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

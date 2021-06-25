@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -23,20 +25,22 @@ public class Reader {
     @Column(nullable = false, updatable = false)
     private long id;
     private String remarks;
-    private Date fromTime;
-    private Date untilTime;
+    private LocalDateTime fromTime;
+    private LocalDateTime untilTime;
     private Boolean enabled;
     private String longitude;
     private String status;
     private String latitude;
+    private long controllerId;
+    private long mapId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "controller_id", nullable = false)
-    @JsonBackReference
-    private Controller controller;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "controller_id", nullable = false)
+//    @JsonBackReference
+//    private Controller controller;
 
 
-    public Reader(String remarks, Date fromTime, Date untilTime, Boolean enabled, String status, String longitude, String latitude, Controller controller) {
+    public Reader(String remarks, LocalDateTime fromTime, LocalDateTime untilTime, Boolean enabled, String status, String longitude, String latitude, long controllerId, long mapId) {
         this.remarks = remarks;
         this.fromTime = fromTime;
         this.untilTime = untilTime;
@@ -44,6 +48,8 @@ public class Reader {
         this.status = status;
         this.longitude = longitude;
         this.latitude = latitude;
-        this.controller = controller;
+        this.controllerId = controllerId;
+        this.mapId = mapId;
+//        this.controller = controller;
     }
 }

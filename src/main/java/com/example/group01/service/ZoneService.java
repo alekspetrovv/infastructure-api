@@ -23,10 +23,10 @@ public class ZoneService {
     public final MapRepository mapRepository;
 
     public Zone create(Zone zone) {
-        Zone zoneExist = zoneRepository.getZoneByTitle(zone.getTitle());
-        if (zoneExist != null) {
-            throw new ZoneNotFoundException("Zone with title: " + zone.getTitle() + " already exist!");
-        }
+//        Zone zoneExist = zoneRepository.getZoneByTitle(zone.getTitle());
+//        if (zoneExist != null) {
+//            throw new ZoneNotFoundException("Zone with title: " + zone.getTitle() + " already exist!");
+//        }
         return zoneRepository.save(zone);
     }
 

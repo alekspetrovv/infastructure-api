@@ -27,6 +27,8 @@ public class Zone implements Serializable {
     private long id;
     private String title;
     private String img;
+    private String latLngs;
+    private String readers;
 
     @ManyToOne
     @JoinColumn(name = "map_id", nullable = false)
@@ -42,11 +44,11 @@ public class Zone implements Serializable {
     private List<Point> pointsList = new ArrayList<>();
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( name = "zones_readers",
-            joinColumns = @JoinColumn(name = "zone_id"),
-            inverseJoinColumns = @JoinColumn(name = "reader_id"))
-    private Set<Reader> readers = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable( name = "zones_readers",
+//            joinColumns = @JoinColumn(name = "zone_id"),
+//            inverseJoinColumns = @JoinColumn(name = "reader_id"))
+//    private Set<Reader> readers = new HashSet<>();
 
 
     public Zone(String title, String img, Map map) {

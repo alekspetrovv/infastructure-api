@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,27 +27,29 @@ public class Controller implements Serializable {
     private long id;
     private String remarks;
     private String status;
-    private Date fromTime;
-    private Date untilTime;
+    private LocalDateTime fromTime;
+    private LocalDateTime untilTime;
     private Boolean enabled;
     private String longitude;
     private String latitude;
+    private long mapId;
 
 
-    @OneToMany(
-            mappedBy = "controller",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @JsonBackReference
-    private List<Reader> readerList = new ArrayList<>();
+//    @OneToMany(
+//            mappedBy = "controller",
+//            fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    @JsonBackReference
+//    private List<Reader> readerList = new ArrayList<>();
 
 
-    public Controller(String remarks, String longitude, String latitude) {
+    public Controller(String remarks, String longitude, String latitude, long mapId) {
         this.remarks = remarks;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.mapId = mapId;
     }
 
 

@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class ReaderController {
     @GetMapping("/controllerId/{id}")
     public ResponseEntity<?> getControllerIdReader(@PathVariable("id") Long id) {
         Reader getReader = readerService.findReaderById(id);
-        return new ResponseEntity<>(getReader.getController().getId(), HttpStatus.OK);
+        return new ResponseEntity<>(getReader.getControllerId(), HttpStatus.OK);
     }
 
     @PostMapping(value = "")
@@ -51,20 +52,22 @@ public class ReaderController {
             @NotBlank @RequestParam("longitude") String longitude,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @RequestParam(value = "untilTime", required = false) Date untilTime,
-            @RequestParam("controller_id") com.example.group01.modules.Controller controller
+            @RequestParam(value = "fromTime", required = false) String fromTime,
+            @RequestParam(value = "untilTime", required = false) String untilTime,
+            @RequestParam(value = "controllerId", required = false) Long controllerId,
+            @RequestParam("mapId") Long mapId
 
     ) {
         Reader reader = new Reader();
         reader.setRemarks(remarks);
         reader.setStatus(status);
         reader.setEnabled(enabled);
-        reader.setFromTime(fromTime);
-        reader.setUntilTime(untilTime);
+        if(fromTime != null) { reader.setFromTime(LocalDateTime.parse("1970-01-01T" + fromTime)); }
+        if(untilTime != null) { reader.setUntilTime(LocalDateTime.parse("1970-01-01T" + untilTime)); }
         reader.setLatitude(latitude);
         reader.setLongitude(longitude);
-        reader.setController(controller);
+        reader.setControllerId(controllerId);
+        reader.setMapId(mapId);
 
 
         Reader newReader = readerService.create(reader);
@@ -75,24 +78,27 @@ public class ReaderController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable long id,
-            @RequestParam("remarks") String remarks,
-            @NotBlank @RequestParam("latitude") String latitude,
-            @NotBlank @RequestParam("longitude") String longitude,
+            @RequestParam(value = "remarks", required = false) String remarks,
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @RequestParam(value = "untilTime", required = false) Date untilTime,
-            @RequestParam(value = "controller_id", required = false) com.example.group01.modules.Controller controller
+            @RequestParam(value = "fromTime", required = false) String fromTime,
+            @RequestParam(value = "untilTime", required = false) String untilTime,
+            @RequestParam(value = "controllerId", required = false) Long controllerId
     ) {
         Reader reader = this.readerService.findReaderById(id);
         reader.setRemarks(remarks);
         reader.setStatus(status);
         reader.setEnabled(enabled);
-        reader.setFromTime(fromTime);
-        reader.setUntilTime(untilTime);
+        if(fromTime != null) { reader.setFromTime(LocalDateTime.parse("1970-01-01T" + fromTime)); }
+        if(untilTime != null) { reader.setUntilTime(LocalDateTime.parse("1970-01-01T" + untilTime)); }
         reader.setLatitude(latitude);
+
+
+
         reader.setLongitude(longitude);
-        reader.setController(controller);
+        reader.setControllerId(controllerId);
 
 
         Reader updatedReader = readerService.update(reader);

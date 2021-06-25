@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -51,18 +52,21 @@ public class ControllerController {
             @NotBlank @RequestParam("longitude") String longitude,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @RequestParam(value = "untilTime", required = false) Date untilTime
+            @RequestParam(value = "fromTime", required = false) String fromTime,
+            @RequestParam(value = "untilTime", required = false) String untilTime,
+            @RequestParam("mapId") Long mapId
 
     ) {
         Controller controller = new Controller();
         controller.setRemarks(remarks);
         controller.setStatus(status);
         controller.setEnabled(enabled);
-//        controller.setFromTime(fromTime);
-//        controller.setUntilTime(untilTime);
+        if(fromTime != null) { controller.setFromTime(LocalDateTime.parse("1970-01-01T" + fromTime)); }
+        if(untilTime != null) { controller.setUntilTime(LocalDateTime.parse("1970-01-01T" + untilTime)); }
         controller.setLatitude(latitude);
         controller.setLongitude(longitude);
+        controller.setMapId(mapId);
+
         Controller newController = controllerService.create(controller);
         return new ResponseEntity<>(newController, HttpStatus.CREATED);
     }
@@ -76,17 +80,17 @@ public class ControllerController {
             @RequestParam(value = "longitude", required = false) String longitude,
             @RequestParam(value = "status", required = false) String status,
             @RequestParam(value = "enabled", required = false) Boolean enabled,
-            @RequestParam(value = "fromTime", required = false) Date fromTime,
-            @RequestParam(value = "untilTime", required = false) Date untilTime
+            @RequestParam(value = "fromTime", required = false) String fromTime,
+            @RequestParam(value = "untilTime", required = false) String untilTime
     ) {
         Controller controller = this.controllerService.findControllerById(id);
-        controller.setRemarks(remarks);
-        controller.setStatus(status);
-        controller.setEnabled(enabled);
-        controller.setFromTime(fromTime);
-        controller.setUntilTime(untilTime);
-        controller.setLatitude(latitude);
-        controller.setLongitude(longitude);
+        if(remarks != null) {controller.setRemarks(remarks);}
+        if(status != null) {controller.setStatus(status);}
+        if(enabled != null) {controller.setEnabled(enabled);}
+        if(fromTime != null) {controller.setFromTime(LocalDateTime.parse("1970-01-01T" + fromTime)); }
+        if(untilTime != null) {controller.setUntilTime(LocalDateTime.parse("1970-01-01T" + untilTime)); }
+        if(latitude != null) {controller.setLatitude(latitude);}
+        if(longitude != null) {controller.setLongitude(longitude);}
         Controller updatedController = controllerService.update(controller);
 
         return new ResponseEntity<>(updatedController, HttpStatus.CREATED);
